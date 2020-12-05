@@ -28,32 +28,32 @@ def get_input(a="guess"):  # so we don't need to repeat code to validate startin
 
 
 t = int(input("Would you like to enter your own code (0) or have a random one generated (1)? "))
-if t:
+if t:  # i.e. is 1
     target_code = gen_number()
     print("Generated code. Start guessing! \n")
-else:
+else:  # i.e. is 0
     target_code = get_input("starting code")
+# print(target_code)  # debug
 
 while True:
     current_guess = get_input()
     if current_guess != target_code:
         target_code_work = target_code[:]  # to avoid references
-        b_to_print = 0
-        w_to_print = 0
+        to_print = ""
 
         for i in range(len(current_guess)):  # separating the for loops prioritises 'b', if a letter occurs multiple
                                              # times in the guess
             if current_guess[i] == target_code_work[i]:
                 current_guess[i] = 'x'  # once a char has been worked on, replace with something else to avoid repeats
-                target_code_work[i] = '*'  # I think this slightly bad algorithm is hard to avoid since we are operating
-                b_to_print += 1            # 2 independent for loops, and keeping a list of worked on chars would be tedious
+                target_code_work[i] = '*'
+                to_print += 'b'
 
         for i in current_guess:
             if i in target_code_work:
                 target_code_work[target_code_work.index(i)] = '*'
-                w_to_print += 1
+                to_print += 'w'
 
-        print(('b' * b_to_print) + ('w' * w_to_print))
+        print(to_print)
         continue
     else:
         print("Correct")
